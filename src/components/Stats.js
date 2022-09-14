@@ -92,4 +92,5 @@ const Heading = styled.h2`
 const StatisticsSection = styled.section`
   width: 80%;
   margin: 0 auto;
+  color: var(--yellow);
 `;
