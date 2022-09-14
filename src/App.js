@@ -48,10 +48,10 @@ export default function App() {
 
   return (
     <Wrapper>
+      <Stars />
       <Stats days={days} />
       <Banner />
       <Form days={days} handlePoints={handlePoints} />
-      <Stars />
     </Wrapper>
   );
 }
