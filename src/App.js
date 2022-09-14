@@ -1,5 +1,10 @@
+import styled from "styled-components";
+
+import Banner from "./components/Banner";
 import Form from "./components/Form";
+import Stars from "./components/Stars";
 import Stats from "./components/Stats";
+
 import useLocalStorage from "./hooks/useLocalStorage";
 
 export default function App() {
@@ -42,9 +47,15 @@ export default function App() {
   };
 
   return (
-    <>
+    <Wrapper>
       <Stats days={days} />
+      <Banner />
       <Form days={days} handlePoints={handlePoints} />
-    </>
+      <Stars />
+    </Wrapper>
   );
 }
+
+const Wrapper = styled.main`
+  position: relative;
+`;
