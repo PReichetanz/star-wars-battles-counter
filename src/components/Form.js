@@ -38,7 +38,7 @@ export default function Form({ handlePoints }) {
         <label htmlFor="five">5</label>
         <input id="five" type="radio" name="points" value="5" />
       </Fieldset>
-      <button type="submit">Submit</button>
+      <SubmitButton type="submit">Submit</SubmitButton>
     </StyledForm>
   );
 }
@@ -51,7 +51,7 @@ const Fieldset = styled.fieldset`
 `;
 
 const StyledForm = styled.form`
-  width: 80%;
+  max-width: 300px;
   margin: 2rem auto;
   display: grid;
   gap: 1rem;
@@ -64,7 +64,6 @@ const StyledCheckboxLabel = styled.label`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  font-size: 500;
   height: 40px;
   &:before {
     width: 80px;
@@ -99,4 +98,18 @@ const StyledCheckbox = styled.input`
   &:checked + .side-switch__label:after {
     right: -25px;
   }
+`;
+
+const SubmitButton = styled.button`
+  color: var(--white);
+  background: linear-gradient(
+    0.25turn,
+    var(--primary-blue),
+    var(--primary-red)
+  );
+  font-weight: 700;
+  width: 50%;
+  border: none;
+  border-radius: 5px;
+  padding: 1rem;
 `;

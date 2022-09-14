@@ -8,18 +8,19 @@ const GlobalStyle = createGlobalStyle`
   }
 
   :root {
-    --primary-red: #c02216;
-    --primary-blue: #0042aa;
-    --green: #00c767;
-    --yellow: #fc9518;
-    --white: #f2eeec;
+    --primary-red: #941204;
+    --primary-blue: #003884;
+    --black: #000;
+    --yellow: #FFE81F;
+    --white: #FBFBFB;
   }
 
   body {
-    margin: 0;
+    margin: auto;
     padding: 0;
     font-family: Open-Sans, Helvetica, Sans-Serif;
-    background: linear-gradient(0.25turn,#0042aa, #c02216);
+    background: #000;
+    max-width: 500px;
   }
 `;
 
