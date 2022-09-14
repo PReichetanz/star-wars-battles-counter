@@ -22,6 +22,11 @@ const GlobalStyle = createGlobalStyle`
     background: #000;
     max-width: 500px;
   }
+
+  @font-face {
+    font-family: 'Starjedi';
+    src: url('./fonts/Starjedi.ttf')
+  }
 `;
 
 export default GlobalStyle;

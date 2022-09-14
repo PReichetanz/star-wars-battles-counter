@@ -112,4 +112,6 @@ const SubmitButton = styled.button`
   border: none;
   border-radius: 5px;
   padding: 1rem;
+  font-family: "Starjedi";
+  text-transform: uppercase;
 `;
