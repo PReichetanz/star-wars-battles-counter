@@ -23,6 +23,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: Open-Sans, Helvetica, Sans-Serif;
     background: #000;
     max-width: 500px;
+    font-family: 'Starjedi', sans-serif;
   }
 
   @font-face {

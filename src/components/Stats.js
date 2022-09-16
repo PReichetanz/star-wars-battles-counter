@@ -59,38 +59,47 @@ export default function Stats({ days }) {
 
   return (
     <StatisticsSection>
-      <Heading>Statistics</Heading>
-      <table>
-        <thead>
-          <tr>
-            <th colSpan="2">Today</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Battles</td>
-            <td>{statisticsOfCurrentDay?.totalNumberOfBattles}</td>
-          </tr>
-          <tr>
-            <td>Points</td>
-            <td>{statisticsOfCurrentDay?.totalPoints}</td>
-          </tr>
-          <tr>
-            <td>Points per Battle</td>
-            <td>{statisticsOfCurrentDay?.pointsPerBattle}</td>
-          </tr>
-        </tbody>
-      </table>
+      <Heading>Today's Stats</Heading>
+      <InformationWrapper>
+        <InformationNumber>
+          {statisticsOfCurrentDay?.totalNumberOfBattles}
+        </InformationNumber>
+        <span>Battles</span>
+        <InformationNumber>
+          {statisticsOfCurrentDay?.totalPoints}
+        </InformationNumber>
+        <span>Points</span>
+        <InformationNumber>
+          {statisticsOfCurrentDay?.pointsPerBattle}
+        </InformationNumber>
+        <span>Average</span>
+      </InformationWrapper>
     </StatisticsSection>
   );
 }
 
 const Heading = styled.h2`
-  text-align: center;
+  font-family: "Starjedi";
+`;
+
+const InformationNumber = styled.span`
+  font-size: 1.5rem;
+`;
+
+const InformationWrapper = styled.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr 1fr;
+  gap: 1rem;
+  justify-items: center;
+  grid-auto-flow: column;
 `;
 
 const StatisticsSection = styled.section`
   width: 80%;
   margin: 0 auto;
   color: var(--yellow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `;
