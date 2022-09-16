@@ -25,18 +25,18 @@ export default function Form({ handlePoints }) {
         aria-label="Switch light and darkness"
       ></StyledCheckboxLabel>
       <Fieldset aria-label="Number of points achieved">
-        <label htmlFor="zero">0</label>
-        <input id="zero" type="radio" name="points" value="0" required />
-        <label htmlFor="one">1</label>
-        <input id="one" type="radio" name="points" value="1" />
-        <label htmlFor="two">2</label>
-        <input id="two" type="radio" name="points" value="2" />
-        <label htmlFor="three">3</label>
-        <input id="three" type="radio" name="points" value="3" />
-        <label htmlFor="four">4</label>
-        <input id="four" type="radio" name="points" value="4" />
-        <label htmlFor="five">5</label>
-        <input id="five" type="radio" name="points" value="5" />
+        <PointsLabel htmlFor="zero">0</PointsLabel>
+        <PointsInput id="zero" type="radio" name="points" value="0" required />
+        <PointsLabel htmlFor="one">1</PointsLabel>
+        <PointsInput id="one" type="radio" name="points" value="1" />
+        <PointsLabel htmlFor="two">2</PointsLabel>
+        <PointsInput id="two" type="radio" name="points" value="2" />
+        <PointsLabel htmlFor="three">3</PointsLabel>
+        <PointsInput id="three" type="radio" name="points" value="3" />
+        <PointsLabel htmlFor="four">4</PointsLabel>
+        <PointsInput id="four" type="radio" name="points" value="4" />
+        <PointsLabel htmlFor="five">5</PointsLabel>
+        <PointsInput id="five" type="radio" name="points" value="5" />
       </Fieldset>
       <SubmitButton type="submit">Submit</SubmitButton>
     </StyledForm>
@@ -45,8 +45,40 @@ export default function Form({ handlePoints }) {
 
 const Fieldset = styled.fieldset`
   color: var(--white);
+  border: none;
+  display: flex;
+  gap: 5px;
   & label {
     margin-left: 0.5rem;
+  }
+`;
+
+const PointsInput = styled.input`
+  height: 0;
+  width: 0;
+  visibility: hidden;
+  &:checked {
+    background-color: var(--primary-blue);
+  }
+`;
+
+const PointsLabel = styled.label`
+  cursor: pointer;
+  position: relative;
+  height: 40px;
+  &:before {
+    color: var(--white);
+    content: "";
+  }
+  &:after {
+    content: "";
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    top: 5px;
+    background-color: var(--white);
+    display: block;
   }
 `;
 
@@ -66,13 +98,13 @@ const StyledCheckboxLabel = styled.label`
   justify-content: center;
   height: 40px;
   &:before {
+    content: "";
+    position: absolute;
     width: 80px;
     height: 40px;
     background: var(--primary-blue);
     display: block;
     border-radius: 100px;
-    position: absolute;
-    content: "";
     right: -40px;
   }
   &:after {
