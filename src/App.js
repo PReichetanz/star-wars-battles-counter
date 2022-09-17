@@ -6,9 +6,11 @@ import Stars from "./components/Stars";
 import Stats from "./components/Stats";
 
 import useLocalStorage from "./hooks/useLocalStorage";
+import { useState } from "react";
 
 export default function App() {
   const [days, setDays] = useLocalStorage("days", []);
+  const [isDarkSideChosen, setIsDarkSideChosen] = useState(false);
 
   const currentDate = {
     day: new Date().getDate(),
@@ -46,12 +48,20 @@ export default function App() {
     }
   };
 
+  const handleSideSwitch = () => {
+    setIsDarkSideChosen(!isDarkSideChosen);
+  };
+
   return (
     <Wrapper>
       <Stars />
       <Stats days={days} />
       <Banner />
-      <Form days={days} handlePoints={handlePoints} />
+      <Form
+        handlePoints={handlePoints}
+        onSideSwitch={handleSideSwitch}
+        isDarkSideChosen={isDarkSideChosen}
+      />
     </Wrapper>
   );
 }
