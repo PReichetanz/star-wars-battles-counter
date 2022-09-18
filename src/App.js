@@ -6,11 +6,25 @@ import Stars from "./components/Stars";
 import Stats from "./components/Stats";
 
 import useLocalStorage from "./hooks/useLocalStorage";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { saveDays, getDays } from "./services/days";
 
 export default function App() {
   const [days, setDays] = useLocalStorage("days", []);
   const [isDarkSideChosen, setIsDarkSideChosen] = useState(false);
+
+  useEffect(() => {
+    const loadDays = async () => {
+      try {
+        const days = await getDays();
+        const newDays = days ?? [];
+        setDays(newDays);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    loadDays();
+  }, [setDays]);
 
   const currentDate = {
     day: new Date().getDate(),
@@ -32,6 +46,9 @@ export default function App() {
         battles: [newData],
       };
       setDays([...days, newDay]);
+      // saveDays([...days, newDay]);
+      // test with MongoDB:
+      saveDays(newDay);
     } else {
       const updatedExistingDay = {
         ...days[existingDayIndex],
@@ -45,6 +62,13 @@ export default function App() {
         }
       });
       setDays(newDays);
+      // saveDays(newDays);
+      // test with MongoDB:
+      const updatedExistingDayDB = {
+        date: currentDate,
+        battles: [...days[existingDayIndex].battles, newData],
+      };
+      saveDays(updatedExistingDayDB);
     }
   };
 
