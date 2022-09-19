@@ -25,18 +25,30 @@ export default function Form({ handlePoints }) {
         aria-label="Switch light and darkness"
       ></StyledCheckboxLabel>
       <Fieldset aria-label="Number of points achieved">
-        <PointsLabel htmlFor="zero">0</PointsLabel>
         <PointsInput id="zero" type="radio" name="points" value="0" required />
-        <PointsLabel htmlFor="one">1</PointsLabel>
+        <PointsLabel htmlFor="zero">
+          <PointsCircle className="circle">0</PointsCircle>
+        </PointsLabel>
         <PointsInput id="one" type="radio" name="points" value="1" />
-        <PointsLabel htmlFor="two">2</PointsLabel>
+        <PointsLabel htmlFor="one">
+          <PointsCircle>1</PointsCircle>
+        </PointsLabel>
         <PointsInput id="two" type="radio" name="points" value="2" />
-        <PointsLabel htmlFor="three">3</PointsLabel>
+        <PointsLabel htmlFor="two">
+          <PointsCircle>2</PointsCircle>
+        </PointsLabel>
         <PointsInput id="three" type="radio" name="points" value="3" />
-        <PointsLabel htmlFor="four">4</PointsLabel>
+        <PointsLabel htmlFor="three">
+          <PointsCircle>3</PointsCircle>
+        </PointsLabel>
         <PointsInput id="four" type="radio" name="points" value="4" />
-        <PointsLabel htmlFor="five">5</PointsLabel>
+        <PointsLabel htmlFor="four">
+          <PointsCircle>4</PointsCircle>
+        </PointsLabel>
         <PointsInput id="five" type="radio" name="points" value="5" />
+        <PointsLabel htmlFor="five">
+          <PointsCircle>5</PointsCircle>
+        </PointsLabel>
       </Fieldset>
       <SubmitButton type="submit">Submit</SubmitButton>
     </StyledForm>
@@ -54,10 +66,25 @@ const Fieldset = styled.fieldset`
 `;
 
 const PointsInput = styled.input`
-  height: 0;
-  width: 0;
-  visibility: hidden;
+  display: none;
   &:checked {
+    background-color: var(--primary-blue);
+  }
+`;
+
+const PointsCircle = styled.span`
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin: -1px 4px 0 0;
+  vertical-align: middle;
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: var(--white);
+  color: var(--black);
+  text-align: center;
+  line-height: 44px;
+  ${PointsInput}:checked & .circle {
     background-color: var(--primary-blue);
   }
 `;
@@ -66,24 +93,10 @@ const PointsLabel = styled.label`
   cursor: pointer;
   position: relative;
   height: 40px;
-  &:before {
-    color: var(--white);
-    content: "";
-  }
-  &:after {
-    content: "";
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    top: 5px;
-    background-color: var(--white);
-    display: block;
-  }
+  font-size: 1.25rem;
 `;
 
 const StyledForm = styled.form`
-  max-width: 300px;
   margin: 2rem auto;
   display: grid;
   gap: 1rem;
