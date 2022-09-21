@@ -5,12 +5,25 @@ import Form from "./components/Form";
 import Stars from "./components/Stars";
 import Stats from "./components/Stats";
 
-import useLocalStorage from "./hooks/useLocalStorage";
 import { useState } from "react";
+import { getDays } from "./services/days.js";
+import { useEffect } from "react";
 
 export default function App() {
-  const [days, setDays] = useLocalStorage("days", []);
+  const [days, setDays] = useState([]);
   const [isDarkSideChosen, setIsDarkSideChosen] = useState(false);
+
+  useEffect(() => {
+    const loadingDays = async () => {
+      try {
+        const data = await getDays();
+        setDays(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    loadingDays();
+  }, []);
 
   const currentDate = {
     day: new Date().getDate(),
