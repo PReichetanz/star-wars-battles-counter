@@ -50,7 +50,6 @@ export default function Stats({ days }) {
       JSON.stringify(days[days.length - 1].date) ===
         JSON.stringify(currentDay.date)
     ) {
-      console.log("day aleady exists");
       setCurrentDay(days[days.length - 1]);
       updateStatistics(days[days.length - 1]);
     }
