@@ -5,13 +5,11 @@ import Form from "./components/Form";
 import Stars from "./components/Stars";
 import Stats from "./components/Stats";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { getDays, saveBattle } from "./services/days.js";
-import { useEffect } from "react";
 
 export default function App() {
   const [days, setDays] = useState([]);
-  const [isDarkSideChosen, setIsDarkSideChosen] = useState(false);
   // eslint-disable-next-line
   const [lastBattle, setLastBattle] = useState(null);
 
@@ -43,20 +41,12 @@ export default function App() {
     loadingDays();
   };
 
-  const handleSideSwitch = () => {
-    setIsDarkSideChosen(!isDarkSideChosen);
-  };
-
   return (
     <Wrapper>
       <Stars />
       <Stats days={days} />
       <Banner />
-      <Form
-        handlePoints={handlePoints}
-        onSideSwitch={handleSideSwitch}
-        isDarkSideChosen={isDarkSideChosen}
-      />
+      <Form handlePoints={handlePoints} />
     </Wrapper>
   );
 }

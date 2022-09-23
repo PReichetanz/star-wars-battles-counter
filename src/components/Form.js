@@ -1,6 +1,9 @@
 import styled from "styled-components";
+import { useState } from "react";
 
-export default function Form({ handlePoints, onSideSwitch, isDarkSideChosen }) {
+export default function Form({ handlePoints }) {
+  const [isDarkSideChosen, setIsDarkSideChosen] = useState(false);
+  console.log("isDarkSideChosen", isDarkSideChosen);
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -8,6 +11,12 @@ export default function Form({ handlePoints, onSideSwitch, isDarkSideChosen }) {
 
     handlePoints(submittedData);
     event.target.reset();
+    setIsDarkSideChosen(false);
+  };
+
+  const handleSideSwitch = () => {
+    console.log("handleSideSwitch was toggled!");
+    setIsDarkSideChosen(!isDarkSideChosen);
   };
 
   return (
@@ -18,7 +27,7 @@ export default function Form({ handlePoints, onSideSwitch, isDarkSideChosen }) {
         type="checkbox"
         name="side"
         value="dark"
-        onChange={onSideSwitch}
+        onChange={handleSideSwitch}
       />
       <StyledCheckboxLabel
         className="side-switch__label"
@@ -26,28 +35,65 @@ export default function Form({ handlePoints, onSideSwitch, isDarkSideChosen }) {
         aria-label="Switch light and darkness"
       ></StyledCheckboxLabel>
       <Fieldset aria-label="Number of points achieved">
-        <PointsInput id="zero" type="radio" name="points" value="0" required />
-        <PointsLabel htmlFor="zero">
-          <PointsCircle className="circle">0</PointsCircle>
+        <PointsInput
+          id="zero"
+          type="radio"
+          name="points"
+          value="0"
+          required
+          isDarkSideChosen={isDarkSideChosen}
+        />
+        <PointsLabel className="points__label" htmlFor="zero">
+          <PointsCircle>0</PointsCircle>
         </PointsLabel>
-        <PointsInput id="one" type="radio" name="points" value="1" />
-        <PointsLabel htmlFor="one">
+        <PointsInput
+          id="one"
+          type="radio"
+          name="points"
+          value="1"
+          isDarkSideChosen={isDarkSideChosen}
+        />
+        <PointsLabel className="points__label" htmlFor="one">
           <PointsCircle>1</PointsCircle>
         </PointsLabel>
-        <PointsInput id="two" type="radio" name="points" value="2" />
-        <PointsLabel htmlFor="two">
+        <PointsInput
+          id="two"
+          type="radio"
+          name="points"
+          value="2"
+          isDarkSideChosen={isDarkSideChosen}
+        />
+        <PointsLabel className="points__label" htmlFor="two">
           <PointsCircle>2</PointsCircle>
         </PointsLabel>
-        <PointsInput id="three" type="radio" name="points" value="3" />
-        <PointsLabel htmlFor="three">
+        <PointsInput
+          id="three"
+          type="radio"
+          name="points"
+          value="3"
+          isDarkSideChosen={isDarkSideChosen}
+        />
+        <PointsLabel className="points__label" htmlFor="three">
           <PointsCircle>3</PointsCircle>
         </PointsLabel>
-        <PointsInput id="four" type="radio" name="points" value="4" />
-        <PointsLabel htmlFor="four">
+        <PointsInput
+          id="four"
+          type="radio"
+          name="points"
+          value="4"
+          isDarkSideChosen={isDarkSideChosen}
+        />
+        <PointsLabel className="points__label" htmlFor="four">
           <PointsCircle>4</PointsCircle>
         </PointsLabel>
-        <PointsInput id="five" type="radio" name="points" value="5" />
-        <PointsLabel htmlFor="five">
+        <PointsInput
+          id="five"
+          type="radio"
+          name="points"
+          value="5"
+          isDarkSideChosen={isDarkSideChosen}
+        />
+        <PointsLabel className="points__label" htmlFor="five">
           <PointsCircle>5</PointsCircle>
         </PointsLabel>
       </Fieldset>
@@ -68,10 +114,16 @@ const Fieldset = styled.fieldset`
   }
 `;
 
-const PointsInput = styled.input`
-  display: none;
-  &:checked {
-    background-color: var(--primary-blue);
+const PointsInput = styled.input.attrs((props) => ({
+  isDarkSideChosen: props.isDarkSideChosen,
+}))`
+  height: 0;
+  width: 0;
+  visibility: hidden;
+  &:checked + .points__label > span {
+    background-color: ${(props) =>
+      props.isDarkSideChosen ? "var(--primary-red)" : "var(--primary-blue)"};
+    color: var(--white);
   }
 `;
 
@@ -87,9 +139,6 @@ const PointsCircle = styled.span`
   color: var(--black);
   text-align: center;
   line-height: 44px;
-  ${PointsInput}:checked & .circle {
-    background-color: var(--primary-blue);
-  }
 `;
 
 const PointsLabel = styled.label`
