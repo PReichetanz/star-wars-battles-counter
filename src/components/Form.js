@@ -1,6 +1,18 @@
 import styled from "styled-components";
+import { useState, useRef, useEffect, useCallback } from "react";
 
-export default function Form({ handlePoints, onSideSwitch, isDarkSideChosen }) {
+export default function Form({ handlePoints }) {
+  const [isDarkSideChosen, setIsDarkSideChosen] = useState(false);
+  const sideInputRef = useRef(null);
+
+  const handleSideSwitch = useCallback(() => {
+    setIsDarkSideChosen(!isDarkSideChosen);
+  }, [isDarkSideChosen]);
+
+  useEffect(() => {
+    sideInputRef.current.addEventListener("change", handleSideSwitch);
+  }, [handleSideSwitch]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -8,6 +20,7 @@ export default function Form({ handlePoints, onSideSwitch, isDarkSideChosen }) {
 
     handlePoints(submittedData);
     event.target.reset();
+    setIsDarkSideChosen(false);
   };
 
   return (
@@ -18,7 +31,7 @@ export default function Form({ handlePoints, onSideSwitch, isDarkSideChosen }) {
         type="checkbox"
         name="side"
         value="dark"
-        onChange={onSideSwitch}
+        ref={sideInputRef}
       />
       <StyledCheckboxLabel
         className="side-switch__label"
@@ -26,18 +39,67 @@ export default function Form({ handlePoints, onSideSwitch, isDarkSideChosen }) {
         aria-label="Switch light and darkness"
       ></StyledCheckboxLabel>
       <Fieldset aria-label="Number of points achieved">
-        <label htmlFor="zero">0</label>
-        <input id="zero" type="radio" name="points" value="0" required />
-        <label htmlFor="one">1</label>
-        <input id="one" type="radio" name="points" value="1" />
-        <label htmlFor="two">2</label>
-        <input id="two" type="radio" name="points" value="2" />
-        <label htmlFor="three">3</label>
-        <input id="three" type="radio" name="points" value="3" />
-        <label htmlFor="four">4</label>
-        <input id="four" type="radio" name="points" value="4" />
-        <label htmlFor="five">5</label>
-        <input id="five" type="radio" name="points" value="5" />
+        <PointsInput
+          id="zero"
+          type="radio"
+          name="points"
+          value="0"
+          required
+          isDarkSideChosen={isDarkSideChosen}
+        />
+        <PointsLabel className="points__label" htmlFor="zero">
+          <PointsCircle>0</PointsCircle>
+        </PointsLabel>
+        <PointsInput
+          id="one"
+          type="radio"
+          name="points"
+          value="1"
+          isDarkSideChosen={isDarkSideChosen}
+        />
+        <PointsLabel className="points__label" htmlFor="one">
+          <PointsCircle>1</PointsCircle>
+        </PointsLabel>
+        <PointsInput
+          id="two"
+          type="radio"
+          name="points"
+          value="2"
+          isDarkSideChosen={isDarkSideChosen}
+        />
+        <PointsLabel className="points__label" htmlFor="two">
+          <PointsCircle>2</PointsCircle>
+        </PointsLabel>
+        <PointsInput
+          id="three"
+          type="radio"
+          name="points"
+          value="3"
+          isDarkSideChosen={isDarkSideChosen}
+        />
+        <PointsLabel className="points__label" htmlFor="three">
+          <PointsCircle>3</PointsCircle>
+        </PointsLabel>
+        <PointsInput
+          id="four"
+          type="radio"
+          name="points"
+          value="4"
+          isDarkSideChosen={isDarkSideChosen}
+        />
+        <PointsLabel className="points__label" htmlFor="four">
+          <PointsCircle>4</PointsCircle>
+        </PointsLabel>
+        <PointsInput
+          id="five"
+          type="radio"
+          name="points"
+          value="5"
+          isDarkSideChosen={isDarkSideChosen}
+        />
+        <PointsLabel className="points__label" htmlFor="five">
+          <PointsCircle>5</PointsCircle>
+        </PointsLabel>
       </Fieldset>
       <SubmitButton type="submit" isDarkSideChosen={isDarkSideChosen}>
         Submit
@@ -48,13 +110,49 @@ export default function Form({ handlePoints, onSideSwitch, isDarkSideChosen }) {
 
 const Fieldset = styled.fieldset`
   color: var(--white);
+  border: none;
+  display: flex;
+  gap: 5px;
   & label {
     margin-left: 0.5rem;
   }
 `;
 
+const PointsInput = styled.input.attrs((props) => ({
+  isDarkSideChosen: props.isDarkSideChosen,
+}))`
+  height: 0;
+  width: 0;
+  visibility: hidden;
+  &:checked + .points__label > span {
+    background-color: ${(props) =>
+      props.isDarkSideChosen ? "var(--primary-red)" : "var(--primary-blue)"};
+    color: var(--white);
+  }
+`;
+
+const PointsCircle = styled.span`
+  display: inline-block;
+  width: 40px;
+  height: 40px;
+  margin: -1px 4px 0 0;
+  vertical-align: middle;
+  cursor: pointer;
+  border-radius: 50%;
+  background-color: var(--white);
+  color: var(--black);
+  text-align: center;
+  line-height: 44px;
+`;
+
+const PointsLabel = styled.label`
+  cursor: pointer;
+  position: relative;
+  height: 40px;
+  font-size: 1.25rem;
+`;
+
 const StyledForm = styled.form`
-  max-width: 300px;
   margin: 2rem auto;
   display: grid;
   gap: 1rem;
@@ -69,13 +167,13 @@ const StyledCheckboxLabel = styled.label`
   justify-content: center;
   height: 40px;
   &:before {
+    content: "";
+    position: absolute;
     width: 80px;
     height: 40px;
     background: var(--primary-blue);
     display: block;
     border-radius: 100px;
-    position: absolute;
-    content: "";
     right: -40px;
   }
   &:after {
