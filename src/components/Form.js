@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export default function Form({ handlePoints }) {
+export default function Form({ handlePoints, onSideSwitch, isDarkSideChosen }) {
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -18,6 +18,7 @@ export default function Form({ handlePoints }) {
         type="checkbox"
         name="side"
         value="dark"
+        onChange={onSideSwitch}
       />
       <StyledCheckboxLabel
         className="side-switch__label"
@@ -50,7 +51,9 @@ export default function Form({ handlePoints }) {
           <PointsCircle>5</PointsCircle>
         </PointsLabel>
       </Fieldset>
-      <SubmitButton type="submit">Submit</SubmitButton>
+      <SubmitButton type="submit" isDarkSideChosen={isDarkSideChosen}>
+        Submit
+      </SubmitButton>
     </StyledForm>
   );
 }
@@ -145,13 +148,19 @@ const StyledCheckbox = styled.input`
   }
 `;
 
-const SubmitButton = styled.button`
+const SubmitButton = styled.button.attrs((props) => ({
+  isDarkSideChosen: props.isDarkSideChosen,
+}))`
   color: var(--white);
-  background: linear-gradient(
-    0.25turn,
-    var(--primary-blue),
-    var(--primary-red)
-  );
+  background: ${(props) =>
+    props.isDarkSideChosen
+      ? `linear-gradient(0.25turn,
+    var(--primary-red) 70%,
+    var(--primary-blue))`
+      : `linear-gradient(0.25turn,
+    var(--primary-blue) 70%,
+    var(--primary-red))`};
+  transition: background 2s ease-out;
   font-weight: 700;
   width: 50%;
   border: none;
