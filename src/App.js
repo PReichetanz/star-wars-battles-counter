@@ -5,47 +5,42 @@ import Form from "./components/Form";
 import Stars from "./components/Stars";
 import Stats from "./components/Stats";
 
-import useLocalStorage from "./hooks/useLocalStorage";
-import { useState } from "react";
+import { useState, useCallback } from "react";
+import { getDays, saveBattle } from "./services/days.js";
+import { useEffect } from "react";
 
 export default function App() {
-  const [days, setDays] = useLocalStorage("days", []);
+  const [days, setDays] = useState([]);
   const [isDarkSideChosen, setIsDarkSideChosen] = useState(false);
+  // eslint-disable-next-line
+  const [lastBattle, setLastBattle] = useState(null);
 
-  const currentDate = {
-    day: new Date().getDate(),
-    month: new Date().getMonth(),
-    year: new Date().getFullYear(),
-  };
-
-  const handlePoints = (newData) => {
-    const existingDayIndex = days.findIndex(
-      (day) =>
-        day.date.day === currentDate.day &&
-        day.date.month === currentDate.month &&
-        day.date.year === currentDate.year
-    );
-
-    if (existingDayIndex < 0) {
-      const newDay = {
-        date: currentDate,
-        battles: [newData],
-      };
-      setDays([...days, newDay]);
-    } else {
-      const updatedExistingDay = {
-        ...days[existingDayIndex],
-        battles: [...days[existingDayIndex].battles, newData],
-      };
-      const newDays = days.map((day, index) => {
-        if (index !== existingDayIndex) {
-          return day;
-        } else {
-          return updatedExistingDay;
-        }
-      });
-      setDays(newDays);
+  const loadingDays = useCallback(async () => {
+    try {
+      const data = await getDays();
+      setDays(data);
+      setLastBattle(
+        data
+          .find(
+            (day) =>
+              day.date.day === new Date().getDate() &&
+              day.date.month === new Date().getMonth() &&
+              day.date.year === new Date().getFullYear()
+          )
+          ?.battles.slice(-1)[0]
+      );
+    } catch (error) {
+      console.error(error);
     }
+  }, [setLastBattle]);
+
+  useEffect(() => {
+    loadingDays();
+  }, [loadingDays]);
+
+  const handlePoints = async (newBattle) => {
+    await saveBattle(newBattle);
+    loadingDays();
   };
 
   const handleSideSwitch = () => {
