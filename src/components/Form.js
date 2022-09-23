@@ -112,10 +112,10 @@ const Fieldset = styled.fieldset`
   color: var(--white);
   border: none;
   display: flex;
-  gap: 5px;
   & label {
-    margin-left: 0.5rem;
+    margin-left: 0.25rem;
   }
+  padding: 0;
 `;
 
 const PointsInput = styled.input.attrs((props) => ({
@@ -133,8 +133,8 @@ const PointsInput = styled.input.attrs((props) => ({
 
 const PointsCircle = styled.span`
   display: inline-block;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   margin: -1px 4px 0 0;
   vertical-align: middle;
   cursor: pointer;
@@ -142,7 +142,7 @@ const PointsCircle = styled.span`
   background-color: var(--white);
   color: var(--black);
   text-align: center;
-  line-height: 44px;
+  line-height: 35px;
 `;
 
 const PointsLabel = styled.label`
