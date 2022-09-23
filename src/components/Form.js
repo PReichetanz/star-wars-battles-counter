@@ -1,9 +1,18 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 
 export default function Form({ handlePoints }) {
   const [isDarkSideChosen, setIsDarkSideChosen] = useState(false);
-  console.log("isDarkSideChosen", isDarkSideChosen);
+  const sideInputRef = useRef(null);
+
+  const handleSideSwitch = useCallback(() => {
+    setIsDarkSideChosen(!isDarkSideChosen);
+  }, [isDarkSideChosen]);
+
+  useEffect(() => {
+    sideInputRef.current.addEventListener("change", handleSideSwitch);
+  }, [handleSideSwitch]);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -14,11 +23,6 @@ export default function Form({ handlePoints }) {
     setIsDarkSideChosen(false);
   };
 
-  const handleSideSwitch = () => {
-    console.log("handleSideSwitch was toggled!");
-    setIsDarkSideChosen(!isDarkSideChosen);
-  };
-
   return (
     <StyledForm onSubmit={handleSubmit} aria-label="Submit battle result">
       <StyledCheckbox
@@ -27,7 +31,7 @@ export default function Form({ handlePoints }) {
         type="checkbox"
         name="side"
         value="dark"
-        onChange={handleSideSwitch}
+        ref={sideInputRef}
       />
       <StyledCheckboxLabel
         className="side-switch__label"
