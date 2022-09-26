@@ -135,14 +135,14 @@ const PointsCircle = styled.span`
   display: inline-block;
   width: 30px;
   height: 30px;
-  margin: -1px 4px 0 0;
+  margin: 0 4px;
   vertical-align: middle;
   cursor: pointer;
   border-radius: 50%;
   background-color: var(--white);
   color: var(--black);
   text-align: center;
-  line-height: 35px;
+  line-height: 30px;
 `;
 
 const PointsLabel = styled.label`
@@ -207,7 +207,7 @@ const SubmitButton = styled.button.attrs((props) => ({
   color: var(--white);
   background: ${(props) =>
     props.isDarkSideChosen
-      ? `linear-gradient(0.25turn,
+      ? `linear-gradient(0.75turn,
     var(--primary-red) 70%,
     var(--primary-blue))`
       : `linear-gradient(0.25turn,
